@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SortifyXLS - Automated Excel Sorting</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Background decorative blobs -->
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        
+        <header class="app-header">
+            <div class="logo-container">
+                <i data-lucide="database" class="logo-icon"></i>
+                <h1>Sortify<span>XLS</span></h1>
+            </div>
+            <p class="subtitle">Automated Intelligent Excel Sorting Portal</p>
+        </header>
+
+        <main class="app-main">
+            <!-- Error Banner -->
+            <div id="error-banner" class="error-banner hidden">
+                <p id="error-message"></p>
+            </div>
+
+            <!-- Upload Section (View 1) -->
+            <div id="upload-section" class="upload-section fade-in">
+                <div class="glass-card">
+                    
+                    <div class="file-upload-container">
+                        <div id="drop-zone" class="drop-zone">
+                            <input type="file" id="file-input" class="file-input-hidden" accept=".xlsx, .xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+                            
+                            <!-- Initial Upload State -->
+                            <div id="upload-content" class="drop-zone-content">
+                                <i data-lucide="upload-cloud" class="upload-icon"></i>
+                                <h3>Drag & Drop your Excel file here</h3>
+                                <p>or click to browse your files</p>
+                            </div>
+
+                            <!-- File Selected State -->
+                            <div id="file-info" class="file-info-content hidden">
+                                <i data-lucide="file-spreadsheet" class="file-icon"></i>
+                                <div class="file-details">
+                                    <h4 id="file-name">filename.xlsx</h4>
+                                    <p id="file-size">0 KB</p>
+                                </div>
+                                <button id="clear-btn" class="clear-btn">
+                                    <i data-lucide="x"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Processing Overlay -->
+                    <div id="processing-overlay" class="processing-overlay hidden">
+                        <i data-lucide="loader-2" class="spinner"></i>
+                        <p>Processing and sorting your data...</p>
+                    </div>
+                </div>
+                
+                <div class="instructions">
+                    <h3>How it works</h3>
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <p>Upload an Excel file with Name, University, Department, Email, Contact Number, ECA, and CV Link columns.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <p>Our system instantly parses and sorts the data by University.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <p>View the organized results in a clean, responsive table.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- History Section -->
+                <div id="history-card" class="glass-card history-card hidden">
+                    <div class="history-header">
+                        <h3><i data-lucide="history"></i> Recent Files</h3>
+                        <button id="clear-history-btn" class="clear-history-btn">Clear History</button>
+                    </div>
+                    <div class="history-list" id="history-list">
+                        <!-- History items injected here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Section (View 2) -->
+            <div id="results-section" class="results-section slide-up hidden">
+                <button id="back-btn" class="back-btn">
+                    <i data-lucide="arrow-left"></i> Upload Another File
+                </button>
+                
+                <div class="data-table-container">
+                    <div class="table-header-info">
+                        <div class="table-title">
+                            <h2>Parsed Data</h2>
+                            <span id="record-count" class="badge">0 Records</span>
+                        </div>
+                        <button id="generate-report-btn" class="generate-btn">
+                            <i data-lucide="file-down"></i> Report Generate
+                        </button>
+                    </div>
+                    
+                    <div class="table-wrapper">
+                        <table class="glass-table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <div class="th-content">
+                                            <i data-lucide="user"></i> Name
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th-content">
+                                            <i data-lucide="building-2"></i> University
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th-content">
+                                            <i data-lucide="graduation-cap"></i> Department
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th-content">
+                                            <i data-lucide="mail"></i> Email
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th-content">
+                                            <i data-lucide="phone"></i> Contact Number
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th-content">
+                                            <i data-lucide="award"></i> ECA
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th-content">
+                                            <i data-lucide="link"></i> CV Link
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th-content">
+                                            <i data-lucide="check-circle"></i> Review
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body">
+                                <!-- Data rows will be injected here via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="app-footer">
+            <p>SortifyXLS Portal &copy; 2026</p>
+        </footer>
+    </div>
+
+    <!-- SheetJS (xlsx) via CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- Custom Logic -->
+    <script src="script.js"></script>
+</body>
+</html>
